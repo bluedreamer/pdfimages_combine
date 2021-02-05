@@ -2,7 +2,7 @@
 Creates a script to combine images and masks extracted from pdf by pdfimages. Images are copied with stripping to remove metadata to make them deterministic, otherwise there is a timestamp in them when they are extracted from the PDF which is annoying.
 
 # Needed packages
-dnf install poppler-utils cmake gcc-c++ 
+dnf install poppler-utils cmake gcc-c++ ImageMagick fdupes
 
 # Build Instructions
     git submodule init
