@@ -21,30 +21,13 @@ int main(int argc, char *argv[])
          filename = argv[2];
       }
 
-      std::ifstream in(filename.c_str());
-      int           lineno = 0;
-      std::string   line;
-
-      ImageContainer images(prefix);
-      while(std::getline(in, line))
-      {
-         // std::cout << line << std::endl;
-         ++lineno;
-         if(lineno < 3)
-         {
-            continue;
-         }
-
-         Entry entry(line);
-         images.push_back(entry);
-      }
-
-      // images.dump();
-      images.printScript();
+      ImageContainer images(prefix, filename);
+//      images.dump();
+            images.printScript();
    }
    catch(const std::exception &e)
    {
-      std::cout << "EXCEPTION: " << e.what() << std::endl;
+      std::cerr << "EXCEPTION: " << e.what() << std::endl;
    }
 
    return 0;

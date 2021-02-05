@@ -1,6 +1,12 @@
 #pragma once
 
+#include <filesystem>
+#include <optional>
+#include <ostream>
 #include <string>
+
+#include "Exceptions.h"
+#include "ImageFileName.h"
 
 class Entry
 {
@@ -33,25 +39,144 @@ public:
       ccitt_e, //< CCITT Group 3 or Group 4 Fax
    };
 
-   int  getObjectId() const;
-   bool isMask() const;
-   int  getNumber() const;
+   int                  getObjectId() const;
+   bool                 isMask() const;
+   int                  getNumber() const;
+   void                 setFilename(std::optional<ImageFileName> filename);
+   friend std::ostream &operator<<(std::ostream &os, const Entry &rhs);
+   static std::string   to_string(ImageType e);
+   static std::string   to_string(Colour e);
+   static std::string   to_string(Encoding e);
+   template<typename Enum>
+   static inline Enum from_string(const std::string &str);
+   static void        print_header(std::ostream &os);
+
+   bool compare(const Entry &entry) const;
+   const std::filesystem::path &getFilename() const;
 
 private:
-   int         page_{-1};
-   int         image_number_{-1};
-   ImageType   type_{ImageType::image_e};
-   int         width_{-1};
-   int         height_{-1};
-   Colour      colour_{Colour::gray_e};
-   int         colour_components_{-1};
-   int         bits_per_component_{-1};
-   Encoding    encoding_{Encoding::image_e};
-   bool        interpolation_{false};
-   int         object_id_{-1};
-   int         object_generation_{-1};
-   int         x_ppi_{-1};
-   int         y_ppi_{-1};
-   std::string size_;
-   std::string ratio_;
+   void print(std::ostream &os) const;
+
+   int                          page_{-1};
+   int                          image_number_{-1};
+   ImageType                    type_{ImageType::image_e};
+   int                          width_{-1};
+   int                          height_{-1};
+   Colour                       colour_{Colour::gray_e};
+   int                          colour_components_{-1};
+   int                          bits_per_component_{-1};
+   Encoding                     encoding_{Encoding::image_e};
+   bool                         interpolation_{false};
+   int                          object_id_{-1};
+   int                          object_generation_{-1};
+   int                          x_ppi_{-1};
+   int                          y_ppi_{-1};
+   std::string                  size_;
+   std::string                  ratio_;
+   std::optional<ImageFileName> filename_;
 };
+
+template<>
+inline Entry::ImageType Entry::from_string(const std::string &str)
+{
+   using namespace std::string_literals;
+   ImageType imagetype;
+   if(str == "image"s)
+   {
+      imagetype = ImageType::image_e;
+   }
+   else if(str == "mask"s)
+   {
+      imagetype = ImageType::mask_e;
+   }
+   else if(str == "smask"s)
+   {
+      imagetype = ImageType::smask_e;
+   }
+   else if(str == "stencil"s)
+   {
+      imagetype = ImageType::stencil_e;
+   }
+   else
+   {
+      throw LogicError(__FILE__, __func__, __LINE__) << "Unknown image type: " << str;
+   }
+
+   return imagetype;
+}
+template<>
+inline Entry::Colour Entry::from_string(const std::string &str)
+{
+   using namespace std::string_literals;
+   Colour colour;
+   if(str == "gray"s)
+   {
+      colour = Colour::gray_e;
+   }
+   else if(str == "rgb"s)
+   {
+      colour = Colour::rgb_e;
+   }
+   else if(str == "cmyk"s)
+   {
+      colour = Colour::cmyk_e;
+   }
+   else if(str == "lab"s)
+   {
+      colour = Colour::lab_e;
+   }
+   else if(str == "icc"s)
+   {
+      colour = Colour::icc_e;
+   }
+   else if(str == "index"s)
+   {
+      colour = Colour::index_e;
+   }
+   else if(str == "sep"s)
+   {
+      colour = Colour::sep_e;
+   }
+   else if(str == "devn"s)
+   {
+      colour = Colour::devn_e;
+   }
+   else
+   {
+      throw LogicError(__FILE__, __func__, __LINE__) << "Unknown Colour type: " << str;
+   }
+
+   return colour;
+}
+
+template<>
+inline Entry::Encoding Entry::from_string(const std::string &str)
+{
+   using namespace std::string_literals;
+   Encoding encoding;
+   if(str == "image"s)
+   {
+      encoding = Encoding::image_e;
+   }
+   else if(str == "jpeg"s)
+   {
+      encoding = Encoding::jpeg_e;
+   }
+   else if(str == "jp2"s)
+   {
+      encoding = Encoding::jp2_e;
+   }
+   else if(str == "jbig2"s)
+   {
+      encoding = Encoding::jbig2_e;
+   }
+   else if(str == "ccitt"s)
+   {
+      encoding = Encoding::ccitt_e;
+   }
+   else
+   {
+      throw LogicError(__FILE__, __func__, __LINE__) << "Unknown Encoding type: " << str;
+   }
+   return encoding;
+}

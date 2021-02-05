@@ -8,26 +8,38 @@
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+      <configuration PROFILE_NAME="Release" CONFIG_NAME="Release" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8697bc8a-ca87-4970-908b-31f753eb2c8b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+    <list default="true" id="48dcdc83-a863-4e69-b60b-38916091ec74" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitmodules" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/streaming_exception" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entry.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Entry.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Entry.h" beforeDir="false" afterPath="$PROJECT_DIR$/Entry.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileList.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/FileList.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FileList.h" beforeDir="false" afterPath="$PROJECT_DIR$/FileList.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImageContainer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/ImageContainer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImageContainer.h" beforeDir="false" afterPath="$PROJECT_DIR$/ImageContainer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ClangdSettings">
-    <option name="formatViaClangd" value="false" />
-  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1o2Wrk61PikCWwo8BpQ8lxO059G" />
+  <component name="ProjectId" id="1o44tG7rxVcdrdjggqya2Qp5C0V" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -35,15 +47,15 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="cf.advertisement.text.has.clang-format" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.overridden" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="settings.editor.selected.configurable" value="web.server" />
+    <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="pdfimages_combine" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="pdfimages_combine" TARGET_NAME="pdfimages_combine" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="pdfimages_combine" RUN_TARGET_NAME="pdfimages_combine">
@@ -60,20 +72,17 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8697bc8a-ca87-4970-908b-31f753eb2c8b" name="Default Changelist" comment="" />
-      <created>1612485367072</created>
+      <changelist id="48dcdc83-a863-4e69-b60b-38916091ec74" name="Default Changelist" comment="" />
+      <created>1612532743254</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1612485367072</updated>
-      <workItem from="1612485368190" duration="1598000" />
+      <updated>1612532743254</updated>
+      <workItem from="1612532746316" duration="229000" />
+      <workItem from="1612533794192" duration="10004000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
   </component>
 </project>

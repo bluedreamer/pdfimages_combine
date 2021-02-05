@@ -1,8 +1,5 @@
-//
-// Created by adrian on 2021-02-04.
-//
-
 #include "Entry.h"
+#include "Exceptions.h"
 #include <iomanip>
 #include <sstream>
 
@@ -15,93 +12,17 @@ Entry::Entry(std::string line)
    strm >> image_number_;
    std::string temp;
    strm >> temp;
-   if(temp == "image"s)
-   {
-      type_ = ImageType::image_e;
-   }
-   else if(temp == "mask"s)
-   {
-      type_ = ImageType::mask_e;
-   }
-   else if(temp == "smask"s)
-   {
-      type_ = ImageType::smask_e;
-   }
-   else if(temp == "stencil"s)
-   {
-      type_ = ImageType::stencil_e;
-   }
-   else
-   {
-      throw std::logic_error(temp + ": is unknown image type");
-   }
+   type_ = from_string<ImageType>(temp);
 
    strm >> width_;
    strm >> height_;
    strm >> temp;
-   if(temp == "gray"s)
-   {
-      colour_ = Colour::gray_e;
-   }
-   else if(temp == "rgb"s)
-   {
-      colour_ = Colour::rgb_e;
-   }
-   else if(temp == "cmyk"s)
-   {
-      colour_ = Colour::cmyk_e;
-   }
-   else if(temp == "lab"s)
-   {
-      colour_ = Colour::lab_e;
-   }
-   else if(temp == "icc"s)
-   {
-      colour_ = Colour::icc_e;
-   }
-   else if(temp == "index"s)
-   {
-      colour_ = Colour::index_e;
-   }
-   else if(temp == "sep"s)
-   {
-      colour_ = Colour::sep_e;
-   }
-   else if(temp == "devn"s)
-   {
-      colour_ = Colour::devn_e;
-   }
-   else
-   {
-      throw std::logic_error(temp + ": is unknown colour");
-   }
+   colour_ = from_string<Colour>(temp);
    strm >> colour_components_;
    strm >> bits_per_component_;
    strm >> temp;
-   if(temp == "image"s)
-   {
-      encoding_ = Encoding::image_e;
-   }
-   else if(temp == "jpeg"s)
-   {
-      encoding_ = Encoding::jpeg_e;
-   }
-   else if(temp == "jp2"s)
-   {
-      encoding_ = Encoding::jp2_e;
-   }
-   else if(temp == "jbig2"s)
-   {
-      encoding_ = Encoding::jbig2_e;
-   }
-   else if(temp == "ccitt"s)
-   {
-      encoding_ = Encoding::ccitt_e;
-   }
-   else
-   {
-      throw std::logic_error(temp + ": is unknown colour");
-   }
+   encoding_ = from_string<Encoding>(temp);
+
    strm >> temp;
    if(temp == "no"s)
    {
@@ -113,7 +34,7 @@ Entry::Entry(std::string line)
    }
    else
    {
-      throw std::logic_error(temp + ": is unknown interpolation");
+      throw LogicError(__FILE__, __func__, __LINE__) << "Unknown interpolation: " << temp;
    }
    strm >> object_id_;
    strm >> object_generation_;
@@ -124,7 +45,7 @@ Entry::Entry(std::string line)
 
    if(strm.bad())
    {
-      throw std::logic_error("Stream bad. Not know do what?");
+      throw LogicError(__FILE__, __func__, __LINE__) << "Unabled to parse: [" << line << "]";
    }
 }
 
@@ -146,3 +67,138 @@ int Entry::getNumber() const
 {
    return image_number_;
 }
+
+void Entry::setFilename(std::optional<ImageFileName> filename)
+{
+   if(filename)
+   {
+      if(filename->getPageNumber() != page_ || filename->getImageNumber() != image_number_)
+      {
+         throw LogicError(__FILE__, __func__, __LINE__) << "Filename: " << filename->getFilename() << " doesnt match " <<
+         "page=" << page_ << " imagenum=" << image_number_;
+      }
+         filename_ = filename;
+   }
+}
+
+std::string Entry::to_string(ImageType e)
+{
+   switch(e)
+   {
+      case ImageType::image_e:
+         return "image"s;
+      case ImageType::mask_e:
+         return "mask"s;
+      case ImageType::smask_e:
+         return "smask"s;
+      case ImageType::stencil_e:
+         return "stencil"s;
+   }
+}
+
+std::string Entry::to_string(Colour e)
+{
+   switch(e)
+   {
+      case Colour::gray_e:
+         return "gray"s;
+      case Colour::rgb_e:
+         return "rgb"s;
+      case Colour::cmyk_e:
+         return "cmyk"s;
+      case Colour::lab_e:
+         return "lab"s;
+      case Colour::icc_e:
+         return "icc"s;
+      case Colour::index_e:
+         return "index"s;
+      case Colour::sep_e:
+         return "sep"s;
+      case Colour::devn_e:
+         return "devn"s;
+   }
+}
+
+std::string Entry::to_string(Encoding e)
+{
+   switch(e)
+   {
+      case Encoding::image_e:
+         return "image"s;
+      case Encoding::jpeg_e:
+         return "jpeg"s;
+      case Encoding::jp2_e:
+         return "jp2"s;
+      case Encoding::jbig2_e:
+         return "jbig2"s;
+      case Encoding::ccitt_e:
+         return "ccitt"s;
+   }
+}
+
+void Entry::print_header(std::ostream &os)
+{
+   os << "page   num  type   width height color comp bpc  enc interp  object ID x-ppi y-ppi size ratio\n";
+   os << "--------------------------------------------------------------------------------------------\n";
+}
+
+void Entry::print(std::ostream &os) const
+{
+   os << std::setw(4) << page_ << ' ';
+   os << std::setw(5) << image_number_ << ' ';
+   os << std::setw(7) << to_string(type_) << ' ';
+   os << std::setw(5) << width_ << ' ';
+   os << std::setw(5) << height_ << ' ';
+   os << std::setw(5) << to_string(colour_) << ' ';
+   os << std::setw(4) << colour_components_ << ' ';
+   os << std::setw(4) << bits_per_component_ << ' ';
+   os << std::setw(5) << to_string(encoding_) << ' ';
+   os << std::setw(3) << (interpolation_ ? "yes" : "no") << ' ';
+   os << std::setw(7) << object_id_ << ' ';
+   os << std::setw(1) << object_generation_ << ' ';
+   os << std::setw(5) << x_ppi_ << ' ';
+   os << std::setw(5) << y_ppi_ << ' ';
+   os << std::setw(5) << size_ << ' ';
+   os << std::setw(4) << ratio_ << ' ';
+   if(filename_)
+   {
+      os << filename_.value();
+   }
+}
+
+std::ostream &operator<<(std::ostream &os, const Entry &rhs)
+{
+   rhs.print(os);
+   return os;
+}
+
+bool Entry::compare(const Entry &entry) const
+{
+   if(width_ != entry.width_)
+   {
+      return false;
+   }
+   if(height_ != entry.height_)
+   {
+      return false;
+   }
+//   if(x_ppi_ != entry.x_ppi_)
+//   {
+//      return false;
+//   }
+//   if(y_ppi_ != entry.y_ppi_)
+//   {
+//      return false;
+//   }
+   return true;
+}
+const std::filesystem::path &Entry::getFilename() const
+{
+   if(!filename_)
+   {
+      throw LogicError(__FILE__, __func__, __LINE__) << "No filename set for entry!! " << *this;
+   }
+
+   return filename_->getFilename();
+}
+

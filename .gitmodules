@@ -1,0 +1,3 @@
+[submodule "streaming_exception"]
+	path = streaming_exception
+	url = https://github.com/bluedreamer/streaming_exception.git

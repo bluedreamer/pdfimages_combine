@@ -5,11 +5,12 @@
 
 class Entry;
 #include "FileList.h"
+#include "PdfImage.h"
 
 class ImageContainer
 {
 public:
-   explicit ImageContainer(std::string prefix);
+   explicit ImageContainer(std::string prefix, std::string filename);
    void push_back(Entry e);
    void dump();
    void printScript();
@@ -19,5 +20,6 @@ private:
 
    std::string                       prefix_;
    FileList                          filelist_;
-   std::map<int, std::vector<Entry>> images_;
+//   std::map<int, std::vector<Entry>> images_;
+   std::map<int, PdfImage> images_;
 };
