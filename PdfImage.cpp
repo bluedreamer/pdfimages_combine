@@ -49,7 +49,7 @@ void PdfImage::push_back(Entry e)
    }
 }
 
-size_t PdfImage::size() const
+auto PdfImage::size() const -> size_t
 {
    return images_.size() + smasks_.size();
 }

@@ -22,7 +22,7 @@ FileList::FileList(std::string dir, std::string prefix)
    }
 }
 
-int FileList::getFileNumber(const std::string &filename) const
+auto FileList::getFileNumber(const std::string &filename) const -> int
 {
    auto        i = filename.find('-');
    std::string page;
@@ -43,7 +43,7 @@ int FileList::getFileNumber(const std::string &filename) const
    return std::stoi(number);
 }
 
-std::optional<ImageFileName> FileList::lookup(int number)
+auto FileList::lookup(int number) -> std::optional<ImageFileName>
 {
    auto rc = paths_.find(number);
    if(rc == paths_.end())

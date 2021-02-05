@@ -9,10 +9,10 @@ class FileList
 {
 public:
    FileList(std::string dir, std::string prefix);
-   std::optional<ImageFileName> lookup(int number);
+   auto lookup(int number) -> std::optional<ImageFileName>;
 
 private:
-   int getFileNumber(const std::string &filename) const;
+   [[nodiscard]] auto getFileNumber(const std::string &filename) const -> int;
 
    std::map<int, ImageFileName> paths_;
 };

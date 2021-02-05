@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-int main(int argc, char *argv[])
+auto main(int argc, char *argv[]) -> int
 {
    try
    {

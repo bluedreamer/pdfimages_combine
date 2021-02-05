@@ -49,12 +49,12 @@ Entry::Entry(std::string line)
    }
 }
 
-int Entry::getObjectId() const
+auto Entry::getObjectId() const -> int
 {
    return object_id_;
 }
 
-bool Entry::isMask() const
+auto Entry::isMask() const -> bool
 {
    if(type_ == ImageType::mask_e || type_ == ImageType::smask_e)
    {
@@ -63,7 +63,7 @@ bool Entry::isMask() const
    return false;
 }
 
-int Entry::getNumber() const
+auto Entry::getNumber() const -> int
 {
    return image_number_;
 }
@@ -81,7 +81,7 @@ void Entry::setFilename(std::optional<ImageFileName> filename)
    }
 }
 
-std::string Entry::to_string(ImageType e)
+auto Entry::to_string(ImageType e) -> std::string
 {
    switch(e)
    {
@@ -94,9 +94,10 @@ std::string Entry::to_string(ImageType e)
       case ImageType::stencil_e:
          return "stencil"s;
    }
+   throw LogicError(__FILE__, __func__, __LINE__) << "Cannot convert ImageType to string: " << (int)e;
 }
 
-std::string Entry::to_string(Colour e)
+auto Entry::to_string(Colour e) -> std::string
 {
    switch(e)
    {
@@ -117,9 +118,10 @@ std::string Entry::to_string(Colour e)
       case Colour::devn_e:
          return "devn"s;
    }
+   throw LogicError(__FILE__, __func__, __LINE__) << "Cannot convert Colour to string: " << (int)e;
 }
 
-std::string Entry::to_string(Encoding e)
+auto Entry::to_string(Encoding e) -> std::string
 {
    switch(e)
    {
@@ -134,6 +136,7 @@ std::string Entry::to_string(Encoding e)
       case Encoding::ccitt_e:
          return "ccitt"s;
    }
+   throw LogicError(__FILE__, __func__, __LINE__) << "Cannot convert Encoding to string: " << (int)e;
 }
 
 void Entry::print_header(std::ostream &os)
@@ -166,13 +169,13 @@ void Entry::print(std::ostream &os) const
    }
 }
 
-std::ostream &operator<<(std::ostream &os, const Entry &rhs)
+auto operator<<(std::ostream &os, const Entry &rhs) -> std::ostream &
 {
    rhs.print(os);
    return os;
 }
 
-bool Entry::compare(const Entry &entry) const
+auto Entry::compare(const Entry &entry) const -> bool
 {
    if(width_ != entry.width_)
    {
@@ -192,7 +195,7 @@ bool Entry::compare(const Entry &entry) const
    //   }
    return true;
 }
-const std::filesystem::path &Entry::getFilename() const
+auto Entry::getFilename() const -> const std::filesystem::path &
 {
    if(!filename_)
    {

@@ -8,10 +8,10 @@ class PdfImage
 {
 public:
    explicit PdfImage(int object_id);
-   void                 push_back(Entry e);
-   [[nodiscard]] size_t size() const;
-   void                 dump() const;
-   void                 printScript() const;
+   void               push_back(Entry e);
+   [[nodiscard]] auto size() const -> size_t;
+   void               dump() const;
+   void               printScript() const;
 
 private:
    int                  object_id_;

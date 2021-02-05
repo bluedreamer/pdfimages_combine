@@ -118,7 +118,7 @@ void ImageContainer::printScript()
    //   }
 }
 
-bool ImageContainer::hasMaskImage(const std::vector<Entry> &data)
+auto ImageContainer::hasMaskImage(const std::vector<Entry> &data) -> bool
 {
    for(const auto &entry : data)
    {

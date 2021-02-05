@@ -7,14 +7,14 @@ class ImageFileName
 {
 public:
    explicit ImageFileName(std::filesystem::path filename);
-   friend std::ostream &operator<<(std::ostream &os, const ImageFileName &rhs)
+   friend auto operator<<(std::ostream &os, const ImageFileName &rhs) -> std::ostream &
    {
       os << rhs.filename_;
       return os;
    }
-   int                          getPageNumber() const { return page_number_; }
-   int                          getImageNumber() const { return image_number_; }
-   const std::filesystem::path &getFilename() const { return filename_; }
+   [[nodiscard]] auto getPageNumber() const -> int { return page_number_; }
+   [[nodiscard]] auto getImageNumber() const -> int { return image_number_; }
+   [[nodiscard]] auto getFilename() const -> const std::filesystem::path & { return filename_; }
 
 private:
    std::filesystem::path filename_;

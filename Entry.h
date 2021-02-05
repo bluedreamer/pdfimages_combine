@@ -39,20 +39,20 @@ public:
       ccitt_e, //< CCITT Group 3 or Group 4 Fax
    };
 
-   int                  getObjectId() const;
-   bool                 isMask() const;
-   int                  getNumber() const;
-   void                 setFilename(std::optional<ImageFileName> filename);
-   friend std::ostream &operator<<(std::ostream &os, const Entry &rhs);
-   static std::string   to_string(ImageType e);
-   static std::string   to_string(Colour e);
-   static std::string   to_string(Encoding e);
+   [[nodiscard]] auto getObjectId() const -> int;
+   [[nodiscard]] auto isMask() const -> bool;
+   [[nodiscard]] auto getNumber() const -> int;
+   void               setFilename(std::optional<ImageFileName> filename);
+   friend auto        operator<<(std::ostream &os, const Entry &rhs) -> std::ostream &;
+   static auto        to_string(ImageType e) -> std::string;
+   static auto        to_string(Colour e) -> std::string;
+   static auto        to_string(Encoding e) -> std::string;
    template<typename Enum>
-   static inline Enum from_string(const std::string &str);
+   static inline auto from_string(const std::string &str) -> Enum;
    static void        print_header(std::ostream &os);
 
-   bool                         compare(const Entry &entry) const;
-   const std::filesystem::path &getFilename() const;
+   [[nodiscard]] auto compare(const Entry &entry) const -> bool;
+   [[nodiscard]] auto getFilename() const -> const std::filesystem::path &;
 
 private:
    void print(std::ostream &os) const;
@@ -77,7 +77,7 @@ private:
 };
 
 template<>
-inline Entry::ImageType Entry::from_string(const std::string &str)
+inline auto Entry::from_string(const std::string &str) -> Entry::ImageType
 {
    using namespace std::string_literals;
    ImageType imagetype;
@@ -105,7 +105,7 @@ inline Entry::ImageType Entry::from_string(const std::string &str)
    return imagetype;
 }
 template<>
-inline Entry::Colour Entry::from_string(const std::string &str)
+inline auto Entry::from_string(const std::string &str) -> Entry::Colour
 {
    using namespace std::string_literals;
    Colour colour;
@@ -150,7 +150,7 @@ inline Entry::Colour Entry::from_string(const std::string &str)
 }
 
 template<>
-inline Entry::Encoding Entry::from_string(const std::string &str)
+inline auto Entry::from_string(const std::string &str) -> Entry::Encoding
 {
    using namespace std::string_literals;
    Encoding encoding;

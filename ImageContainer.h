@@ -16,7 +16,7 @@ public:
    void printScript();
 
 private:
-   bool hasMaskImage(const std::vector<Entry> &vector);
+   auto hasMaskImage(const std::vector<Entry> &vector) -> bool;
 
    std::string prefix_;
    FileList    filelist_;
