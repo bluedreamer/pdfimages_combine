@@ -8,11 +8,11 @@
 class FileList
 {
 public:
-   FileList(std::string dir, std::string prefix);
+   FileList(const std::string& dir, const std::string& prefix);
    auto lookup(int number) -> std::optional<ImageFileName>;
 
 private:
-   [[nodiscard]] auto getFileNumber(const std::string &filename) const -> int;
+   [[nodiscard]] static auto getFileNumber(const std::string &filename) -> int;
 
    std::map<int, ImageFileName> paths_;
 };

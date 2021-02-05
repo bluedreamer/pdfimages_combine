@@ -1,6 +1,6 @@
 #include "ImageFileName.h"
 
-ImageFileName::ImageFileName(std::filesystem::path filename)
+ImageFileName::ImageFileName(const std::filesystem::path& filename)
    : filename_(filename)
 {
    auto        filename_str = filename.string();

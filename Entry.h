@@ -43,16 +43,17 @@ public:
    [[nodiscard]] auto isMask() const -> bool;
    [[nodiscard]] auto getNumber() const -> int;
    void               setFilename(std::optional<ImageFileName> filename);
+   [[nodiscard]] auto compare(const Entry &entry) const -> bool;
+   [[nodiscard]] auto getFilename() const -> const std::filesystem::path &;
+
    friend auto        operator<<(std::ostream &os, const Entry &rhs) -> std::ostream &;
+
    static auto        to_string(ImageType e) -> std::string;
    static auto        to_string(Colour e) -> std::string;
    static auto        to_string(Encoding e) -> std::string;
    template<typename Enum>
    static inline auto from_string(const std::string &str) -> Enum;
    static void        print_header(std::ostream &os);
-
-   [[nodiscard]] auto compare(const Entry &entry) const -> bool;
-   [[nodiscard]] auto getFilename() const -> const std::filesystem::path &;
 
 private:
    void print(std::ostream &os) const;
@@ -104,6 +105,7 @@ inline auto Entry::from_string(const std::string &str) -> Entry::ImageType
 
    return imagetype;
 }
+
 template<>
 inline auto Entry::from_string(const std::string &str) -> Entry::Colour
 {

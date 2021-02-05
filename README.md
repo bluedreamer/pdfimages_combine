@@ -8,7 +8,7 @@ dnf install poppler-utils cmake gcc-c++ ImageMagick fdupes
     git submodule init
     mkdir build
     cd build
-    cmake -DCMAKE_RELEASE_TYPE=Release ..
+    cmake -DCMAKE_BUILD_TYPE=Release ..
     make
 
 # Running it

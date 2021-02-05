@@ -3,9 +3,13 @@
 #include "ImageContainer.h"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
+const char *version="v1.0.0";
 auto main(int argc, char *argv[]) -> int
 {
+   std::filesystem::path binary(argv[0]);
+   std::cerr << binary.filename().string() << ' ' << version << std::endl;
    try
    {
       std::string filename = "list.txt";

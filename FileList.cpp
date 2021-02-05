@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-FileList::FileList(std::string dir, std::string prefix)
+FileList::FileList(const std::string& dir, const std::string& prefix)
 {
    for(auto &p : std::filesystem::directory_iterator(dir))
    {
@@ -22,7 +22,7 @@ FileList::FileList(std::string dir, std::string prefix)
    }
 }
 
-auto FileList::getFileNumber(const std::string &filename) const -> int
+auto FileList::getFileNumber(const std::string &filename) -> int
 {
    auto        i = filename.find('-');
    std::string page;

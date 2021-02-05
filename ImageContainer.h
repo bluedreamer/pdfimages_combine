@@ -10,16 +10,13 @@ class Entry;
 class ImageContainer
 {
 public:
-   explicit ImageContainer(std::string prefix, std::string filename);
+   ImageContainer(const std::string& prefix, const std::string& filename);
    void push_back(Entry e);
    void dump();
    void printScript();
 
 private:
-   auto hasMaskImage(const std::vector<Entry> &vector) -> bool;
-
    std::string prefix_;
    FileList    filelist_;
-   //   std::map<int, std::vector<Entry>> images_;
    std::map<int, PdfImage> images_;
 };
