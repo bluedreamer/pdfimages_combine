@@ -74,10 +74,10 @@ void Entry::setFilename(std::optional<ImageFileName> filename)
    {
       if(filename->getPageNumber() != page_ || filename->getImageNumber() != image_number_)
       {
-         throw LogicError(__FILE__, __func__, __LINE__) << "Filename: " << filename->getFilename() << " doesnt match " <<
-         "page=" << page_ << " imagenum=" << image_number_;
+         throw LogicError(__FILE__, __func__, __LINE__) << "Filename: " << filename->getFilename() << " doesnt match "
+                                                        << "page=" << page_ << " imagenum=" << image_number_;
       }
-         filename_ = filename;
+      filename_ = filename;
    }
 }
 
@@ -182,14 +182,14 @@ bool Entry::compare(const Entry &entry) const
    {
       return false;
    }
-//   if(x_ppi_ != entry.x_ppi_)
-//   {
-//      return false;
-//   }
-//   if(y_ppi_ != entry.y_ppi_)
-//   {
-//      return false;
-//   }
+   //   if(x_ppi_ != entry.x_ppi_)
+   //   {
+   //      return false;
+   //   }
+   //   if(y_ppi_ != entry.y_ppi_)
+   //   {
+   //      return false;
+   //   }
    return true;
 }
 const std::filesystem::path &Entry::getFilename() const
@@ -201,4 +201,3 @@ const std::filesystem::path &Entry::getFilename() const
 
    return filename_->getFilename();
 }
-

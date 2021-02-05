@@ -57,7 +57,7 @@ void ImageContainer::dump()
 
 void ImageContainer::printScript()
 {
-   for(const auto &[id, pdf]: images_)
+   for(const auto &[id, pdf] : images_)
    {
       pdf.printScript();
    }

@@ -18,8 +18,8 @@ public:
 private:
    bool hasMaskImage(const std::vector<Entry> &vector);
 
-   std::string                       prefix_;
-   FileList                          filelist_;
-//   std::map<int, std::vector<Entry>> images_;
+   std::string prefix_;
+   FileList    filelist_;
+   //   std::map<int, std::vector<Entry>> images_;
    std::map<int, PdfImage> images_;
 };

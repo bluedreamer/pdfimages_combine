@@ -51,7 +51,7 @@ public:
    static inline Enum from_string(const std::string &str);
    static void        print_header(std::ostream &os);
 
-   bool compare(const Entry &entry) const;
+   bool                         compare(const Entry &entry) const;
    const std::filesystem::path &getFilename() const;
 
 private:

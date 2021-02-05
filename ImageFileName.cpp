@@ -1,10 +1,10 @@
 #include "ImageFileName.h"
 
 ImageFileName::ImageFileName(std::filesystem::path filename)
-   :filename_(filename)
+   : filename_(filename)
 {
-   auto filename_str=filename.string();
-   auto        i = filename_str.find('-');
+   auto        filename_str = filename.string();
+   auto        i            = filename_str.find('-');
    std::string page_str;
    ++i;
    while(std::isdigit(filename_str[i]))
@@ -21,6 +21,6 @@ ImageFileName::ImageFileName(std::filesystem::path filename)
    }
    // std::cout << "X:" << page << " Y:" << number << " ";
 
-   page_number_=std::stoi(page_str);
-   image_number_=std::stoi(number_str);
+   page_number_  = std::stoi(page_str);
+   image_number_ = std::stoi(number_str);
 }

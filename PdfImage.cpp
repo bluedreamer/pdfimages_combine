@@ -91,14 +91,14 @@ void PdfImage::printScript() const
       {
          output += filename.extension();
          std::cout << "convert -strip " << filename << " " << output << std::endl;
-//         std::cout << "rm " << filename << std::endl;
+         //         std::cout << "rm " << filename << std::endl;
       }
       else
       {
          output += ".png";
-         std::cout << "composite -strip -compose CopyOpacity " << mask->second.getFilename() << " " << filename << " " << output <<
-            std::endl;
-//         std::cout << "rm " << mask->second.getFilename() << " " << filename << std::endl;
+         std::cout << "composite -strip -compose CopyOpacity " << mask->second.getFilename() << " " << filename << " " << output
+                   << std::endl;
+         //         std::cout << "rm " << mask->second.getFilename() << " " << filename << std::endl;
       }
    }
 }

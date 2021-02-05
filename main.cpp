@@ -22,8 +22,8 @@ int main(int argc, char *argv[])
       }
 
       ImageContainer images(prefix, filename);
-//      images.dump();
-            images.printScript();
+      //      images.dump();
+      images.printScript();
    }
    catch(const std::exception &e)
    {

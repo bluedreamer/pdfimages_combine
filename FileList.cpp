@@ -48,7 +48,7 @@ std::optional<ImageFileName> FileList::lookup(int number)
    auto rc = paths_.find(number);
    if(rc == paths_.end())
    {
-//            throw LogicError(__FILE__, __func__, __LINE__) << "Cannot find file number:" << number;
+      //            throw LogicError(__FILE__, __func__, __LINE__) << "Cannot find file number:" << number;
       return {};
    }
    return rc->second;
