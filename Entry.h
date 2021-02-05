@@ -15,13 +15,13 @@ public:
    };
    enum class Colour
    {
-      gray_e,  //<  Gray
-      rgb_e,   //<  RGB
+      gray_e,  //< Gray
+      rgb_e,   //< RGB
       cmyk_e,  //< CMYK
       lab_e,   //< L*a*b
       icc_e,   //< ICC Based
       index_e, //< Indexed Color
-      sep_e,   //<  Separation
+      sep_e,   //< Separation
       devn_e,  //< DeviceN
    };
    enum class Encoding
