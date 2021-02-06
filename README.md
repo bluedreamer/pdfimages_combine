@@ -5,6 +5,8 @@ Creates a script to combine images and masks extracted from pdf by pdfimages. Im
 dnf install poppler-utils cmake gcc-c++ ImageMagick fdupes
 
 # Build Instructions
+
+    # If you are using the tar file you can skip the git submodule as it will fail because its not a git repo
     git submodule update --init
     mkdir build
     cd build
