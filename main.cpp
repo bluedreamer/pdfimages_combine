@@ -5,7 +5,7 @@
 #include <iostream>
 #include <filesystem>
 
-const char *version="v1.0.0";
+const char *version="v1.0.2";
 auto main(int argc, char *argv[]) -> int
 {
    std::filesystem::path binary(argv[0]);
@@ -16,7 +16,7 @@ auto main(int argc, char *argv[]) -> int
 
       if(argc < 2)
       {
-         std::cout << "Need to provide at least image prefix\n";
+         std::cout << "Need to provide at least image prefix you used when extracting\n";
          return 1;
       }
       std::string prefix = argv[1];
@@ -24,6 +24,8 @@ auto main(int argc, char *argv[]) -> int
       {
          filename = argv[2];
       }
+
+      std::cerr << "INFO: Reading image list from : " << filename << std::endl;
 
       ImageContainer images(prefix, filename);
       //      images.dump();

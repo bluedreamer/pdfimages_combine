@@ -29,6 +29,7 @@ public:
       index_e, //< Indexed Color
       sep_e,   //< Separation
       devn_e,  //< DeviceN
+      pattern_e, //< Pattern
    };
    enum class Encoding
    {
@@ -142,6 +143,10 @@ inline auto Entry::from_string(const std::string &str) -> Entry::Colour
    else if(str == "devn"s)
    {
       colour = Colour::devn_e;
+   }
+   else if(str =="-"s)
+   {
+      colour = Colour::pattern_e;
    }
    else
    {

@@ -117,6 +117,8 @@ auto Entry::to_string(Colour e) -> std::string
          return "sep"s;
       case Colour::devn_e:
          return "devn"s;
+      case Colour::pattern_e:
+         return "pattern"s;
    }
    throw LogicError(__FILE__, __func__, __LINE__) << "Cannot convert Colour to string: " << (int)e;
 }
