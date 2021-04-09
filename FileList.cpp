@@ -2,21 +2,27 @@
 #include "Exceptions.h"
 
 #include <iostream>
+#include <regex>
 
 FileList::FileList(const std::string& dir, const std::string& prefix)
 {
    for(auto &p : std::filesystem::directory_iterator(dir))
    {
       auto filename = p.path().filename();
-      if(p.is_regular_file() && filename.string().find(prefix) == 0)
+      const std::regex filename_regex(prefix + "-[0-9]+-[0-9]+");
+      std::string filename_str(filename.string());
+      std::smatch sm;
+      std::regex_search(filename_str, sm, filename_regex);
+//      std::cout << "Filename: " << filename << " Match: " << sm.str() << std::endl;
+      if(p.is_regular_file() && !sm.empty())
       {
          // std::cout << "A: " << filename << " B: " << getFileNumber(filename.string()) << std::endl;
          ImageFileName ifn(filename);
-         auto          rc = paths_.insert(std::make_pair(getFileNumber(filename.string()), filename));
+         auto          rc = paths_.insert(std::make_pair(getFileNumber(filename_str), filename));
 
          if(!rc.second)
          {
-            throw LogicError(__FILE__, __func__, __LINE__) << "Seems we already have filenum from " + filename.string();
+            throw LogicError(__FILE__, __func__, __LINE__) << "Seems we already have filenum from " + filename_str;
          }
       }
    }
