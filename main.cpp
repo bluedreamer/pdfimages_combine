@@ -1,11 +1,9 @@
 #include "Entry.h"
 #include "FileList.h"
 #include "ImageContainer.h"
-#include <fstream>
-#include <iostream>
-#include <filesystem>
 
-const char *version="v1.0.3";
+const char *version="v1.0.4";
+
 auto main(int argc, char *argv[]) -> int
 {
    std::filesystem::path binary(argv[0]);

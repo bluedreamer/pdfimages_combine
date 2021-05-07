@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <string>
 
-ImageContainer::ImageContainer(const std::string& prefix, const std::string& filename)
+ImageContainer::ImageContainer(const std::string &prefix, const std::string &filename)
    : prefix_(prefix)
    , filelist_(".", prefix)
 {
@@ -15,41 +15,46 @@ ImageContainer::ImageContainer(const std::string& prefix, const std::string& fil
    int           lineno = 0;
    std::string   line;
 
+   /**
+    * Process list.txt file and parse into Entry's
+    */
    while(std::getline(in, line))
    {
       // std::cout << line << std::endl;
       ++lineno;
       if(lineno < 3)
       {
+         // Skip column headings
          continue;
       }
 
       Entry entry(std::move(line));
+      auto image_filename = filelist_.lookup(entry.getNumber());
+      entry.setFilename(image_filename);
       push_back(std::move(entry));
    }
 
-   if(images_.empty())
+   if(image_map_.empty())
    {
       throw LogicError(__FILE__, __func__, __LINE__) << "No entries read from pdfimages -list output file: " << filename;
    }
 }
 
-void ImageContainer::push_back(Entry e)
+void ImageContainer::push_back(Entry entry)
 {
-   auto id = e.getObjectId();
-   auto i  = images_.find(id);
-   if(i == images_.end())
+   const auto &img_ref = entry.getImageReference();
+   auto        iterator = image_map_.find(img_ref);
+   if(iterator == image_map_.end())
    {
-      i = images_.insert(i, std::make_pair(id, PdfImage(id)));
+      iterator = image_map_.insert(iterator, std::make_pair(img_ref, PdfImage(img_ref)));
    }
-   auto &pdf = i->second;
-   e.setFilename(filelist_.lookup(e.getNumber()));
-   pdf.push_back(std::move(e));
+   auto &pdf_image = iterator->second;
+   pdf_image.push_back(std::move(entry));
 }
 
 void ImageContainer::dump()
 {
-   for(const auto &[id, pdfimage] : images_)
+   for(const auto &[id, pdfimage] : image_map_)
    {
       pdfimage.dump();
    }
@@ -57,7 +62,7 @@ void ImageContainer::dump()
 
 void ImageContainer::printScript()
 {
-   for(const auto &[id, pdf] : images_)
+   for(const auto &[id, pdf] : image_map_)
    {
       pdf.printScript();
    }

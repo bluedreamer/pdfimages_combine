@@ -3,48 +3,48 @@
 
 #include <iostream>
 
-PdfImage::PdfImage(int object_id)
-   : object_id_(object_id)
+PdfImage::PdfImage(ImageReference object_id)
+   : image_reference_(object_id)
 {
 }
 
-void PdfImage::push_back(Entry e)
+void PdfImage::push_back(Entry entry)
 {
-   if(e.getObjectId() != object_id_)
+   if(entry.getImageReference() != image_reference_)
    {
       throw LogicError(__FILE__, __func__, __LINE__)
-         << "Trying to add Entry with id: " << e.getObjectId() << " to this which has id: " << object_id_;
+         << "Trying to add Entry with id: " << entry.getImageReference() << " to this which has id: " << image_reference_;
    }
 
    if(!first_one_)
    {
-      first_one_ = e; // copy because its moved after
+      first_one_ = entry; // copy because its moved after
    }
    else
    {
-      if(!first_one_.value().compare(e))
+      if(!first_one_.value().compare(entry))
       {
          throw LogicError(__FILE__, __func__, __LINE__) << "Adding Entry that doesn't match key fields, incoming:\n"
-                                                        << e << "\nvs existing\n"
+                                                        << entry << "\nvs existing\n"
                                                         << first_one_.value();
       }
    }
 
-   auto file_number = e.getNumber();
-   if(e.isMask())
+   auto file_number = entry.getNumber();
+   if(entry.isMask())
    {
-      auto result = smasks_.emplace(std::make_pair(file_number, std::move(e)));
+      auto result = smasks_.emplace(std::make_pair(file_number, std::move(entry)));
       if(!result.second)
       {
-         throw LogicError(__FILE__, __func__, __LINE__) << "Failed to insert mask entry: " << e;
+         throw LogicError(__FILE__, __func__, __LINE__) << "Failed to insert mask entry: " << entry;
       }
    }
    else
    {
-      auto result = images_.emplace(std::make_pair(file_number, std::move(e)));
+      auto result = images_.emplace(std::make_pair(file_number, std::move(entry)));
       if(!result.second)
       {
-         throw LogicError(__FILE__, __func__, __LINE__) << "Failed to insert image entry:\n" << e << '\n' << result.first->second;
+         throw LogicError(__FILE__, __func__, __LINE__) << "Failed to insert image entry:\n" << entry << '\n' << result.first->second;
       }
    }
 }
@@ -56,7 +56,7 @@ auto PdfImage::size() const -> size_t
 
 void PdfImage::dump() const
 {
-   std::cout << "\nObject ID: " << object_id_ << std::endl;
+   std::cout << "\nObject ID: " << image_reference_.getObjectNumber() << std::endl;
    if(!images_.empty())
    {
       std::cout << "Images:\n";
@@ -76,6 +76,7 @@ void PdfImage::dump() const
       }
    }
 }
+
 void PdfImage::printScript() const
 {
    for(const auto &[number, entry] : images_)
@@ -86,10 +87,17 @@ void PdfImage::printScript() const
       std::filesystem::create_directory(output);
       output += filename.stem();
       output += "-";
-      output += std::to_string(object_id_);
+      output += std::to_string(image_reference_.getObjectNumber());
       if(mask == smasks_.end())
       {
-         output += filename.extension();
+         if(filename.extension()==".jp2")
+         {
+            output += ".jpg";
+         }
+         else
+         {
+            output += filename.extension();
+         }
          std::cout << "convert -strip " << filename << " " << output << std::endl;
          //         std::cout << "rm " << filename << std::endl;
       }
